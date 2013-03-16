@@ -1,74 +1,279 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta charset="utf-8">
 
-  <head>
-    <meta charset='utf-8' />
-    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
-    <meta name="description" content="Geoportal : GeoPortal mapping template created by Mecklenburg County GIS." />
+    <!--[if lt IE 9]><html class="oldie" lang="en"><![endif]-->
 
-    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+    <title>GeoPortal Project</title>
+    <meta name="description" content="GeoPortal Project - Open Source Mapping Template">
+    <meta name="author" content="Tobin Bradley">
 
-    <title>Geoportal</title>
-  </head>
+    <!-- Allow all robots -->
+    <meta content="all" name="robots" />
 
-  <body>
+    <!-- turn off IE image toolbar -->
+    <meta content="no" http-equiv="imagetoolbar" />
 
-    <!-- HEADER -->
-    <div id="header_wrap" class="outer">
-        <header class="inner">
-          <a id="forkme_banner" href="https://github.com/rullyvm/GeoPortal">View on GitHub</a>
+    <!-- Mobile viewport optimized -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
 
-          <h1 id="project_title">Geoportal</h1>
-          <h2 id="project_tagline">GeoPortal mapping template created by Mecklenburg County GIS.</h2>
+    <!-- Favicon and apple touch icons. -->
+    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="apple-touch-icon-precomposed" href="apple-touch-icon.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="apple-touch-icon-72x72.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="apple-touch-icon-114x114.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="apple-touch-icon-144x144.png" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
 
-            <section id="downloads">
-              <a class="zip_download_link" href="https://github.com/rullyvm/GeoPortal/zipball/master">Download this project as a .zip file</a>
-              <a class="tar_download_link" href="https://github.com/rullyvm/GeoPortal/tarball/master">Download this project as a tar.gz file</a>
-            </section>
+    <!-- jQuery UI CSS -->
+    <link type="text/css" media="all" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/themes/blitzer/jquery-ui.css" rel="stylesheet" />
+
+    <!-- Leaflet CSS -->
+    <!-- Toss these next 2 lines if you are using OpenLayers -->
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.4.4/leaflet.css" />
+    <!--[if lte IE 8]><link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.4.4/leaflet.ie.css" /><![endif]-->
+
+    <!-- CSS: implied media="all" -->
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- Modernizr in the head. The rest of the JavaScript is at the bottom of the page. -->
+    <script src="js/libs/modernizr.custom.js"></script>
+
+</head>
+
+<body>
+
+    <div id="container">
+        <!-- Prompt IE<8 users to install Chrome Frame. -->
+        <!--[if lt IE 8]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to best experience this site.</p><![endif]-->
+
+        <header>
+
+            <!-- Header logo -->
+            <div id="logo" class="logo alignleft">
+                <img src="img/gp_logo.png" />
+            </div>
+
+            <!-- Search -->
+            <div id="searchdiv" class="screen-only">
+                <input id="searchinput" class="ui-corner-all" x-webkit-speech speech placeholder="Start here!" />
+                <p class="mute">
+                    <span id="gpsarea" class="hidden">
+                        <a href="javascript:void(0)" id="gps">Find My Location</a> &bull;
+                    </span>
+                    <a class="searchoptions" href="javascript:void(0)">Help</a>
+                </p>
+            </div>
+
         </header>
+
+
+        <!-- Map area -->
+        <div id="map-container">
+
+            <!-- Toolbar area -->
+            <div id="toolbar" class="screen-only hidden">
+                <div id="mapcontrols">
+                    <input type="radio" id="navigate" name="mapcontrol-button" value="none" checked="checked" />
+                    <label for="navigate">Navigate</label>
+                    <input type="radio" id="identify" name="mapcontrol-button" value="identify" />
+                    <label for="identify">Identify</label>
+                </div>
+                <div id="toolbar-text-output" class="alignright textright">
+                    <span id="toolbar-area"></span>
+                    <span id="toolbar-length"></span>
+                    <br />
+                    <span id="toolbar-coords"></span>
+                </div>
+            </div>
+
+            <!-- Map -->
+            <div id="map" class="ui-corner-all"></div>
+        </div>
+
+
+        <!-- Sidebar -->
+        <aside>
+
+            <!-- Data Accordion -->
+            <div id="accordion-data" class="accordion hidden">
+                <h3 id="WELCOME"><a href="javascript:void(0)">Welcome</a></h3>
+                <div>
+                    <p>
+                        GeoPortal is made possible through the work of much smarter people than myself. An enormous hat tip to <a href="http://jquery.com/">jQuery</a>, <a href="http://jqueryui.com/">jQuery UI</a>, <a href="http://html5boilerplate.com/">HTML5 Boilerplate</a>, <a href="http://www.postgresql.org/">PostgreSQL</a>, <a href="http://postgis.org/">PostGIS</a>, <a href="http://geoserver.org/">GeoServer</a>, <a href="http://leaflet.cloudmade.com/">Leaflet</a>, <a href="http://inkscape.org/">Inkscape</a>, <a href="http://www.gimp.org/">GIMP</a>, and likely a dozen other sources I've borrowed/stolen code from over the years.
+                    </p>
+                    <p><strong><a href="https://github.com/tobinbradley">Fork me on Github</a></strong></p>
+
+                    <div>
+                        <h5>Search Results</h5>
+                        <span class="selectedLocation">No records selected.</span>
+                    </div>
+                </div>
+                <h3 id="TRANSPORTATION"><a href="javascript:void(0)">Transportation</a></h3>
+                <div>
+                    <div>
+                        <h5>Search Results</h5>
+                        <span class="selectedLocation">No records selected.</span>
+                    </div>
+                    <div id="bus-stops" class="selected-data hidden">
+                        <table class="datatable">
+                            <caption>10 Nearest CATS Bus Stops</caption>
+                            <thead>
+                                <tr>
+                                    <th class="ui-state-default"></th>
+                                    <th class="ui-state-default"></th>
+                                    <th class="ui-state-default">Bus Stop</th>
+                                    <th class="ui-state-default">Routes</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                       </table>
+                    </div>
+                    <div id="park-and-rides" class="selected-data hidden">
+                        <table class="datatable">
+                            <caption>3 Nearest CATS Park &amp; Ride</caption>
+                            <thead>
+                                <tr>
+                                    <th class="ui-state-default"></th>
+                                    <th class="ui-state-default"></th>
+                                    <th class="ui-state-default">Bus Stop</th>
+                                    <th class="ui-state-default">Address</th>
+                                    <th class="ui-state-default">Routes</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                    <div id="light-rail-stops" class="selected-data hidden">
+                        <table class="datatable">
+                            <caption>3 Nearest CATS Lynx Stops</caption>
+                            <thead>
+                                <tr>
+                                    <th class="ui-state-default"></th>
+                                    <th class="ui-state-default"></th>
+                                    <th class="ui-state-default">Bus Stop</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+                <h3 id="SERVICES"><a href="javascript:void(0)">Services</a></h3>
+                <div>
+                    <div>
+                        <h5>Search Results</h5>
+                        <span class="selectedLocation">No records selected.</span>
+                    </div>
+                    <div id="parks" class="selected-data hidden">
+                        <table class="datatable">
+                            <caption>5 Closest Parks</caption>
+                            <thead>
+                                 <tr>
+                                      <th class="ui-state-default"></th>
+                                      <th class="ui-state-default"></th>
+                                      <th class="ui-state-default">Park</th>
+                                      <th class="ui-state-default">Address</th>
+                                 </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                    <div id="libraries" class="selected-data hidden">
+                        <table class="datatable">
+                            <caption>5 Closest Libraries</caption>
+                            <thead>
+                                <tr>
+                                    <th class="ui-state-default"></th>
+                                    <th class="ui-state-default"></th>
+                                    <th class="ui-state-default">Library</th>
+                                    <th class="ui-state-default">Address</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                    <div id="fire-stations" class="selected-data hidden">
+                        <table class="datatable">
+                            <caption>3 Closest Fire Stations</caption>
+                            <thead>
+                                <tr>
+                                    <th class="ui-state-default"></th>
+                                    <th class="ui-state-default"></th>
+                                    <th class="ui-state-default">Fire Station</th>
+                                    <th class="ui-state-default">Type</th>
+                                    <th class="ui-state-default">Address</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+                <h3 id="MAPCONTROLS"><a href="javascript:void(0)">Map Controls</a></h3>
+                <div class="textcenter">
+                    <h5 class="opacityControl">Layer Opacity</h5>
+                    <select id="opacitydll" class="opacityControl"></select>
+                    <div id="opacitySlider" class="opacityControl"></div>
+                </div>
+            </div>
+
+            <div id="sidebar-footer" class="textcenter mute">
+                <hr />
+                Created by <a href="http://emaps.charmeck.org">Mecklenburg County GIS</a>
+                <br />
+                Fork me on <a href="https://github.com/tobinbradley">Github</a>
+            </div>
+
+        </aside>
+
+
+
+    </div> <!-- end of #container -->
+
+
+    <!-- JavaScript at the bottom for fast page loading -->
+
+    <!-- Grab Google CDN's jQuery and jQuery UI -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/jquery-ui.min.js"></script>
+
+    <!-- Mapping Library - Leaflet -->
+    <script src="http://cdn.leafletjs.com/leaflet-0.4.4/leaflet.js"></script>
+    <script src="js/map-leaflet.js"></script>
+
+    <!-- Mapping Library - OpenLayers -->
+    <!-- For deployment you should really host the OpenLayers Library locally so an OpenLayers upgrade -->
+    <!-- doesn't break your stuff. -->
+    <!--<script src="http://openlayers.org/api/OpenLayers.js"></script>
+    <script src="js/map-openlayers.js"></script>-->
+
+    <!-- Standard scripts -->
+    <script src="js/config.js"></script>
+    <script src="js/plugins.js"></script>
+    <script src="js/script.js"></script>
+
+    <!-- end scripts-->
+
+
+    <!-- The following content is not displayed at run time -->
+
+    <!-- Welcome screen - jQuery UI Dialog -->
+    <div id="search-dialog" title="Search Help" class="hidden">
+        <p class="textcenter">
+            <iframe width="350" height="262" src="http://www.youtube-nocookie.com/embed/aGlmVQXRRj4?rel=0" frameborder="0" allowfullscreen></iframe>
+        </p>
+        <p>
+          Type in the first part of an address or location and <em>let the search box do the work for you</em>.
+          Select a match using either the mouse or the up/down arrow keys and Enter.
+        </p>
+        <p><span class="ui-icon ui-icon-circle-check alignleft"></span><strong>Address</strong>: Enter the first part of the address. Ex: for 700 North Tryon Street, try <em>700 n</em></p>
+        <p><span class="ui-icon ui-icon-circle-check alignleft"></span><strong>Place or Street</strong>: Enter any part of a place or street name. Ex: type <em>carolina</em></p>
+        <p><span class="ui-icon ui-icon-circle-check alignleft"></span><strong>Intersection</strong>: Enter a street name, followed by an &amp;. Ex: type <em>ruth &amp;</em></p>
+        <p><span class="ui-icon ui-icon-circle-check alignleft"></span><strong>Parcel ID</strong>: Enter an 8-digit Parcel ID. Ex: type <em>11111111</em></p>
     </div>
 
-    <!-- MAIN CONTENT -->
-    <div id="main_content_wrap" class="outer">
-      <section id="main_content" class="inner">
-        <h3>Welcome to GitHub Pages.</h3>
 
-<p>This automatic page generator is the easiest way to create beautiful pages for all of your projects. Author your page content here using GitHub Flavored Markdown, select a template crafted by a designer, and publish. After your page is generated, you can check out the new branch:</p>
-
-<pre><code>$ cd your_repo_root/repo_name
-$ git fetch origin
-$ git checkout gh-pages
-</code></pre>
-
-<p>If you're using the GitHub for Mac, simply sync your repository and you'll see the new branch.</p>
-
-<h3>Designer Templates</h3>
-
-<p>We've crafted some handsome templates for you to use. Go ahead and continue to layouts to browse through them. You can easily go back to edit your page before publishing. After publishing your page, you can revisit the page generator and switch to another theme. Your Page content will be preserved if it remained markdown format.</p>
-
-<h3>Rather Drive Stick?</h3>
-
-<p>If you prefer to not use the automatic generator, push a branch named <code>gh-pages</code> to your repository to create a page manually. In addition to supporting regular HTML content, GitHub Pages support Jekyll, a simple, blog aware static site generator written by our own Tom Preston-Werner. Jekyll makes it easy to create site-wide headers and footers without having to copy them across every page. It also offers intelligent blog support and other advanced templating features.</p>
-
-<h3>Authors and Contributors</h3>
-
-<p>You can <a href="https://github.com/blog/821" class="user-mention">@mention</a> a GitHub username to generate a link to their profile. The resulting <code>&lt;a&gt;</code> element will link to the contributor's GitHub Profile. For example: In 2007, Chris Wanstrath (<a href="https://github.com/defunkt" class="user-mention">@defunkt</a>), PJ Hyett (<a href="https://github.com/pjhyett" class="user-mention">@pjhyett</a>), and Tom Preston-Werner (<a href="https://github.com/mojombo" class="user-mention">@mojombo</a>) founded GitHub.</p>
-
-<h3>Support or Contact</h3>
-
-<p>Having trouble with Pages? Check out the documentation at <a href="http://help.github.com/pages">http://help.github.com/pages</a> or contact <a href="mailto:support@github.com">support@github.com</a> and we’ll help you sort it out.</p>
-      </section>
-    </div>
-
-    <!-- FOOTER  -->
-    <div id="footer_wrap" class="outer">
-      <footer class="inner">
-        <p class="copyright">Geoportal maintained by <a href="https://github.com/rullyvm">rullyvm</a></p>
-        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
-      </footer>
-    </div>
-
-    
-
-  </body>
+</body>
 </html>
